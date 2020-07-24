@@ -1,0 +1,23 @@
+.point {
+  width: 20px;
+  height: 20px;
+
+  min-width: 20px;
+  min-height: 20px;
+
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border: 2px inset #FFFFFF;
+}
+
+.point img {
+  width: 100%;
+}
+
+.undefinedPoint {
+  background-color: #C0C0C0;
+  border: 2px inset #7b7b7b;
+}
