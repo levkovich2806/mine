@@ -1,8 +1,5 @@
-// import store from '../store/index';
 import { PointClick } from '../interfaces';
 import { BLOCK_OPEN, MAP_START, NEW_LEVEL } from '../constants';
-import { GAME_OVER } from '../actions';
-// import { onConnectSuccess, onLevelIsLoading, updateMap } from '../actions';
 
 export const getNewLevelMessage = (level: number) => {
   return `new ${level}`;
@@ -21,13 +18,7 @@ export const getPointClickMessage = ({ x, y }: PointClick) => {
 };
 
 export const parseWsMessage = (message: string) => {
-  console.log({ message });
   const [type, answer] = message.split(':');
-
-  // console.log({
-  //   type,
-  //   answer,
-  // });
 
   switch (type) {
     case MAP_START:

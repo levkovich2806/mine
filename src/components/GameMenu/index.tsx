@@ -20,10 +20,6 @@ const GameMenu: React.FunctionComponent<Props> = ({ levelIsLoading, onGetNewLeve
     onGetNewLevel(level);
   };
 
-  // const handleGetMap = () => {
-  //   onSendMessage(getMapMessage());
-  // };
-
   return (
     <div className={styles.buttons}>
       {LEVEL_NUMBERS.map(level => (
@@ -31,20 +27,6 @@ const GameMenu: React.FunctionComponent<Props> = ({ levelIsLoading, onGetNewLeve
           <NewGameButton handleClick={() => handleNewLevel(level)}>New {level}</NewGameButton>
         </div>
       ))}
-
-      {/*<div className={styles.button}>*/}
-      {/*  <NewGameButton handleClick={() => handleNewLevel(2)}>New 2</NewGameButton>*/}
-      {/*</div>*/}
-      {/*<div className={styles.button}>*/}
-      {/*  <NewGameButton handleClick={() => handleNewLevel(3)}>New 3</NewGameButton>*/}
-      {/*</div>*/}
-      {/*<div className={styles.button}>*/}
-      {/*  <NewGameButton handleClick={() => handleNewLevel(4)}>New 4</NewGameButton>*/}
-      {/*</div>*/}
-
-      {/*{levelIsLoading && (*/}
-      {/*  <button onClick={handleGetMap}>Get Map</button>*/}
-      {/*)}*/}
     </div>
   );
 };

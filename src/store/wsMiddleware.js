@@ -1,6 +1,6 @@
-import { BLOCK_OPEN, LOSE_MESSAGE, MAP_START, NEW_LEVEL, OK_MESSAGE, WS_SERVER } from '../constants';
+import { BLOCK_OPEN, LOSE_MESSAGE, MAP_START, NEW_LEVEL, WS_SERVER } from '../constants';
 import { getMapMessage, parseWsMessage } from '../utils';
-import { GAME_OVER, onClearProgress, onLevelIsLoading, updateMap, getNewLevelSuccess, getMapSuccess } from '../actions';
+import { GAME_OVER, updateMap, getNewLevelSuccess, getMapSuccess } from '../actions';
 import {
   onConnectSuccess,
   WS_SEND,
@@ -33,15 +33,11 @@ export default (store) => (next) => action => {
             dispatch(getMapSuccess());
             break;
           case NEW_LEVEL:
-            // dispatch(onClearProgress());
-            // dispatch(onLevelIsLoading());
-            // dispatch(onSendMessage(getMapMessage()));
             dispatch(getNewLevelSuccess());
             break;
           case BLOCK_OPEN:
-            console.log(payload.answer);
             if ((payload.answer || '').trim() === LOSE_MESSAGE) {
-              // Показать, что игра окончена, результат и т.п. (записать в localStorage)
+              alert(LOSE_MESSAGE);
             }
             dispatch(onSendMessage(getMapMessage()));
             break;
@@ -52,22 +48,19 @@ export default (store) => (next) => action => {
           default:
             break;
         }
-        // dispatch({ type: 'WEBSOCKET_MESSAGE', payload: event });
       };
 
       break;
 
-    // User request to send a message
     case WS_SEND:
       websocket.send(action.payload.message);
       break;
 
-    // User request to disconnect
     case WS_DISCONNECT:
       websocket.close();
       break;
 
-    default: // We don't really need the default but ...
+    default:
       break;
   }
 

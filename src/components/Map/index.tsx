@@ -1,27 +1,26 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import MapPoint from '../MapPont';
-import { onSetFlag } from '../../actions';
+import { onSetFlag, onMapClick } from '../../actions';
 import { onSendMessage } from '../../actions/websocket';
 import styles from './index.module.css';
-import { getPointClickMessage } from '../../utils';
 import { PointClick } from '../../interfaces';
 
 interface Props {
   map: Array<any>,
-  onSendMessage: Function,
+  onMapClick: Function,
   onSetFlag: Function,
   mapLoadingState: Boolean,
 }
 
-const Map: React.FunctionComponent<Props> = ({ map, onSendMessage, onSetFlag, mapLoadingState }) => {
+const Map: React.FunctionComponent<Props> = ({ map, onMapClick, onSetFlag, mapLoadingState }) => {
 
   if (mapLoadingState) {
     return <div>Loading...</div>;
   }
 
   const handlePointClick = ({ x, y }: PointClick) => {
-    onSendMessage(getPointClickMessage({ x, y }));
+    onMapClick({ x, y });
   };
 
   const handleRightClick = ({ x, y }: PointClick) => {
@@ -68,5 +67,6 @@ export default connect(
   {
     onSendMessage,
     onSetFlag,
+    onMapClick,
   },
 )(Map);
