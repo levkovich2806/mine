@@ -1,0 +1,32 @@
+.start {
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+}
+
+.startButton {
+  font-size: 36px;
+  background-color: aquamarine;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  transition: 0.1s;
+}
+
+.startButton:hover {
+  background-color: #abfde9;
+}
+
+.menu {
+  padding: 20px 0;
+}
+
+.map {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

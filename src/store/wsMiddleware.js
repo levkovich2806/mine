@@ -1,6 +1,6 @@
 import { BLOCK_OPEN, LOSE_MESSAGE, MAP_START, NEW_LEVEL, OK_MESSAGE, WS_SERVER } from '../constants';
 import { getMapMessage, parseWsMessage } from '../utils';
-import { onLevelIsLoading } from '../actions';
+import { GAME_OVER, onClearProgress, onLevelIsLoading } from '../actions';
 import { onConnectSuccess, updateMap, WS_SEND, WS_CONNECT, WS_DISCONNECT, onSendMessage } from '../actions/websocket';
 
 let websocket;
@@ -26,15 +26,20 @@ export default (store) => (next) => action => {
             dispatch(updateMap(map));
             break;
           case NEW_LEVEL:
+            dispatch(onClearProgress());
             dispatch(onLevelIsLoading());
             dispatch(onSendMessage(getMapMessage()));
             break;
           case BLOCK_OPEN:
-            if ((payload.answer || '').trim() === OK_MESSAGE) {
-              dispatch(onSendMessage(getMapMessage()));
-            } else if ((payload.answer || '').trim() === LOSE_MESSAGE) {
-              dispatch(onSendMessage(getMapMessage()));
+            console.log(payload.answer);
+            if ((payload.answer || '').trim() === LOSE_MESSAGE) {
+              // Показать, что игра окончена, результат и т.п. (записать в localStorage)
             }
+            dispatch(onSendMessage(getMapMessage()));
+            break;
+          case GAME_OVER:
+            dispatch(onSendMessage(getMapMessage()));
+            // Показать, что игра окончена, результат и т.п. (записать в localStorage)
             break;
           default:
             break;

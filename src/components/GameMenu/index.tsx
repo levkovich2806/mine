@@ -4,6 +4,9 @@ import { getNewLevelMessage, getHelpMessage, getMapMessage, getPointClickMessage
 import { onSendMessage } from '../../actions/websocket';
 import { PointClick } from '../../interfaces';
 import { connect } from 'react-redux';
+import NewGameButton from '../NewGameButton';
+
+import styles from './index.module.css';
 
 interface Props {
   levelIsLoading: boolean,
@@ -28,18 +31,27 @@ const GameMenu: React.FunctionComponent<Props> = ({ levelIsLoading, onSendMessag
   };
 
   return (
-    <div>
+    <div className={styles.buttons}>
       {/*<button onClick={handleGetHelp}>Help</button>*/}
-      <button onClick={() => handleNewLevel(1)}>New 1</button>
-      <button onClick={() => handleNewLevel(2)}>New 2</button>
-      <button onClick={() => handleNewLevel(3)}>New 3</button>
-      <button onClick={() => handleNewLevel(4)}>New 4</button>
-      {/*{levelIsLoading && (*/}
-      {/*  <>*/}
-      {/*    <button onClick={handleGetMap}>Map</button>*/}
-      {/*    <button onClick={() => handleClick({ x: 2, y: 3 })}>Click 2x3</button>*/}
-      {/*  </>*/}
-      {/*)}*/}
+      <div className={styles.button}>
+        <NewGameButton handleClick={() => handleNewLevel(1)}>New 1</NewGameButton>
+      </div>
+      <div className={styles.button}>
+        <NewGameButton handleClick={() => handleNewLevel(2)}>New 2</NewGameButton>
+      </div>
+      <div className={styles.button}>
+        <NewGameButton handleClick={() => handleNewLevel(3)}>New 3</NewGameButton>
+      </div>
+      <div className={styles.button}>
+        <NewGameButton handleClick={() => handleNewLevel(4)}>New 4</NewGameButton>
+      </div>
+
+      {levelIsLoading && (
+        <>
+          <button onClick={handleGetMap}>Get Map</button>
+          {/*<button onClick={() => handleClick({ x: 2, y: 3 })}>Click 2x3</button>*/}
+        </>
+      )}
     </div>
   );
 };

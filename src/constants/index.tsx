@@ -11,7 +11,7 @@ export const UNDEFINED_BLOCK = '□';
 export const BOMB_BLOCK = '*';
 
 export const COLORS = [
-  '#00dddd', // UNDEFINED_BLOCK
+  '#C0C0C0', // UNDEFINED_BLOCK
   '#3434ff', // 1
   '#00FF00', // 2
   '#FF0000', // 3

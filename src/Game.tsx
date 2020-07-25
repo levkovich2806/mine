@@ -6,6 +6,9 @@ import Map from './components/Map';
 
 import { wsConnect } from './actions/websocket';
 
+import './index.css';
+import styles from './index.module.css';
+
 type Props = {
   isConnected: Boolean,
   wsConnect: any
@@ -27,14 +30,18 @@ class Game extends Component<Props, {}> {
   render() {
     const { isConnected } = this.props;
     return (
-      <div>
-        <button onClick={this.handleStartGame}>Start</button>
-        {isConnected && (
+      <>
+
+        {!isConnected ? (
+          <div className={styles.start}>
+            <button className={styles.startButton} onClick={this.handleStartGame}>Start</button>
+          </div>
+        ) : (
           <>
-            <div>
+            <div className={styles.menu}>
               <GameMenu/>
             </div>
-            <div>
+            <div className={styles.map}>
               <Map/>
             </div>
           </>
@@ -46,7 +53,7 @@ class Game extends Component<Props, {}> {
         {/*<button onClick={() => this.handleNewLevel(4)}>New 4</button>*/}
         {/*<button onClick={this.handleGetMap}>Map</button>*/}
         {/*<button onClick={() => this.handleClick({x: 2, y: 3})}>Click 2x3</button>*/}
-      </div>
+      </>
     );
   }
 }

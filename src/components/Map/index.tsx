@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import MapPoint from '../MapPont';
+import { onSetFlag } from '../../actions';
 import { onSendMessage } from '../../actions/websocket';
 import styles from './index.module.css';
 import { getPointClickMessage } from '../../utils';
@@ -8,16 +9,24 @@ import { PointClick } from '../../interfaces';
 
 interface Props {
   map: Array<any>,
-  onSendMessage: Function
+  onSendMessage: Function,
+  onSetFlag: Function
 }
 
-const Map: React.FunctionComponent<Props> = ({ map, onSendMessage }) => {
+const Map: React.FunctionComponent<Props> = ({ map, onSendMessage, onSetFlag }) => {
 
   const handlePointClick = ({ x, y }: PointClick) => {
     onSendMessage(getPointClickMessage({ x, y }));
   };
 
-  console.log('Map render');
+  const handleRightClick = ({ x, y }: PointClick) => {
+    console.log('handleRightClick');
+    // console.log(event);
+    // event.preventDefault();
+    onSetFlag({
+      x, y,
+    });
+  };
 
   return (
     <div>
@@ -25,11 +34,14 @@ const Map: React.FunctionComponent<Props> = ({ map, onSendMessage }) => {
         return (
           <div key={indexRow} className={styles.line}>
             {line.map((point: string, indexColumn: number) => {
+              const pointData = { x: indexColumn, y: indexRow };
+
               return (
                 <MapPoint
                   key={indexColumn}
-                  point={point}
-                  onClick={() => handlePointClick({ x: indexColumn, y: indexRow })}
+                  pointData={pointData}
+                  handleClick={handlePointClick}
+                  handleRightClick={handleRightClick}
                 />
               );
             })}
@@ -51,5 +63,6 @@ export default connect(
   mapStateToProps,
   {
     onSendMessage,
+    onSetFlag,
   },
 )(Map);

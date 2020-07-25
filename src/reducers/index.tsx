@@ -1,5 +1,9 @@
 import { combineReducers } from 'redux';
-import main from './main';
+import main, { IMainState } from './main';
+
+export interface IAppState {
+  main: IMainState
+}
 
 const reducers = combineReducers({
   main,

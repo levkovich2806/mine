@@ -1,6 +1,7 @@
 // import store from '../store/index';
 import { PointClick } from '../interfaces';
 import { BLOCK_OPEN, MAP_START, NEW_LEVEL } from '../constants';
+import { GAME_OVER } from '../actions';
 // import { onConnectSuccess, onLevelIsLoading, updateMap } from '../actions';
 
 export const getNewLevelMessage = (level: number) => {
@@ -20,7 +21,7 @@ export const getPointClickMessage = ({ x, y }: PointClick) => {
 };
 
 export const parseWsMessage = (message: string) => {
-  // console.log(message);
+  console.log({ message });
   const [type, answer] = message.split(':');
 
   // console.log({
@@ -51,8 +52,17 @@ export const parseWsMessage = (message: string) => {
         },
       };
     default:
-      return null;
+      break;
   }
+
+  // if (answer && answer.startsWith('You win')) {
+  //   return {
+  //     type: GAME_OVER,
+  //     payload: {
+  //       answer: answer,
+  //     },
+  //   };
+  // }
 
   // if (message.startsWith(MAP_START)) {
   //
