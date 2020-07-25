@@ -1,57 +1,50 @@
 import * as React from 'react';
-// import { wsSendMessage } from '../../services/ws';
-import { getNewLevelMessage, getHelpMessage, getMapMessage, getPointClickMessage } from '../../utils';
+import { getNewLevelMessage, getMapMessage } from '../../utils';
 import { onSendMessage } from '../../actions/websocket';
-import { PointClick } from '../../interfaces';
+import { onGetNewLevel } from '../../actions';
 import { connect } from 'react-redux';
 import NewGameButton from '../NewGameButton';
 
 import styles from './index.module.css';
 
+const LEVEL_NUMBERS = [1, 2, 3, 4];
+
 interface Props {
   levelIsLoading: boolean,
-  onSendMessage: Function
+  onGetNewLevel: Function
 }
 
-const GameMenu: React.FunctionComponent<Props> = ({ levelIsLoading, onSendMessage }) => {
-  const handleGetHelp = () => {
-    onSendMessage(getHelpMessage());
-  };
-
+const GameMenu: React.FunctionComponent<Props> = ({ levelIsLoading, onGetNewLevel }) => {
   const handleNewLevel = (level: number) => {
-    onSendMessage(getNewLevelMessage(level));
+
+    onGetNewLevel(level);
   };
 
-  const handleGetMap = () => {
-    onSendMessage(getMapMessage());
-  };
-
-  const handleClick = ({ x, y }: PointClick) => {
-    onSendMessage(getPointClickMessage({ x, y }));
-  };
+  // const handleGetMap = () => {
+  //   onSendMessage(getMapMessage());
+  // };
 
   return (
     <div className={styles.buttons}>
-      {/*<button onClick={handleGetHelp}>Help</button>*/}
-      <div className={styles.button}>
-        <NewGameButton handleClick={() => handleNewLevel(1)}>New 1</NewGameButton>
-      </div>
-      <div className={styles.button}>
-        <NewGameButton handleClick={() => handleNewLevel(2)}>New 2</NewGameButton>
-      </div>
-      <div className={styles.button}>
-        <NewGameButton handleClick={() => handleNewLevel(3)}>New 3</NewGameButton>
-      </div>
-      <div className={styles.button}>
-        <NewGameButton handleClick={() => handleNewLevel(4)}>New 4</NewGameButton>
-      </div>
+      {LEVEL_NUMBERS.map(level => (
+        <div className={styles.button} key={level}>
+          <NewGameButton handleClick={() => handleNewLevel(level)}>New {level}</NewGameButton>
+        </div>
+      ))}
 
-      {levelIsLoading && (
-        <>
-          <button onClick={handleGetMap}>Get Map</button>
-          {/*<button onClick={() => handleClick({ x: 2, y: 3 })}>Click 2x3</button>*/}
-        </>
-      )}
+      {/*<div className={styles.button}>*/}
+      {/*  <NewGameButton handleClick={() => handleNewLevel(2)}>New 2</NewGameButton>*/}
+      {/*</div>*/}
+      {/*<div className={styles.button}>*/}
+      {/*  <NewGameButton handleClick={() => handleNewLevel(3)}>New 3</NewGameButton>*/}
+      {/*</div>*/}
+      {/*<div className={styles.button}>*/}
+      {/*  <NewGameButton handleClick={() => handleNewLevel(4)}>New 4</NewGameButton>*/}
+      {/*</div>*/}
+
+      {/*{levelIsLoading && (*/}
+      {/*  <button onClick={handleGetMap}>Get Map</button>*/}
+      {/*)}*/}
     </div>
   );
 };
@@ -68,5 +61,6 @@ export default connect(
   mapStateToProps,
   {
     onSendMessage,
+    onGetNewLevel,
   },
 )(GameMenu);

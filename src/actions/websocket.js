@@ -8,11 +8,12 @@
 // export const wsDisconnect = host => ({ type: WS_DISCONNECT, host });
 // export const wsDisconnected = host => ({ type: WS_DISCONNECTED, host });
 
-import { CONNECT_SUCCESS, UPDATE_MAP } from './index';
+import { CONNECT_SUCCESS } from './index';
 
 export const WS_DISCONNECT = 'WS_DISCONNECT';
 export const WS_CONNECT = 'WS_CONNECT';
 export const WS_SEND = 'WS_SEND';
+
 
 export const wsConnect = () => {
   return {
@@ -35,16 +36,6 @@ export function onSendMessage(message) {
     type: WS_SEND,
     payload: {
       message,
-    },
-  };
-}
-
-
-export function updateMap(map) {
-  return {
-    type: UPDATE_MAP,
-    payload: {
-      map,
     },
   };
 }

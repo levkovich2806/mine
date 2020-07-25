@@ -1,7 +1,13 @@
 import { BLOCK_OPEN, LOSE_MESSAGE, MAP_START, NEW_LEVEL, OK_MESSAGE, WS_SERVER } from '../constants';
 import { getMapMessage, parseWsMessage } from '../utils';
-import { GAME_OVER, onClearProgress, onLevelIsLoading } from '../actions';
-import { onConnectSuccess, updateMap, WS_SEND, WS_CONNECT, WS_DISCONNECT, onSendMessage } from '../actions/websocket';
+import { GAME_OVER, onClearProgress, onLevelIsLoading, updateMap, getNewLevelSuccess, getMapSuccess } from '../actions';
+import {
+  onConnectSuccess,
+  WS_SEND,
+  WS_CONNECT,
+  WS_DISCONNECT,
+  onSendMessage,
+} from '../actions/websocket';
 
 let websocket;
 
@@ -24,11 +30,13 @@ export default (store) => (next) => action => {
           case MAP_START:
             const { map } = payload;
             dispatch(updateMap(map));
+            dispatch(getMapSuccess());
             break;
           case NEW_LEVEL:
-            dispatch(onClearProgress());
-            dispatch(onLevelIsLoading());
-            dispatch(onSendMessage(getMapMessage()));
+            // dispatch(onClearProgress());
+            // dispatch(onLevelIsLoading());
+            // dispatch(onSendMessage(getMapMessage()));
+            dispatch(getNewLevelSuccess());
             break;
           case BLOCK_OPEN:
             console.log(payload.answer);

@@ -1,4 +1,11 @@
-import { CLEAR_PROGRESS, CONNECT_SUCCESS, LEVEL_LOADING_SUCCESS, ON_CHANGE_FLAG_STATE, UPDATE_MAP } from '../actions';
+import {
+  CLEAR_PROGRESS,
+  CONNECT_SUCCESS,
+  MAP_LOADING_STATE,
+  LEVEL_LOADING_SUCCESS,
+  ON_CHANGE_FLAG_STATE,
+  UPDATE_MAP,
+} from '../actions';
 import { FlagMap } from '../interfaces';
 
 export interface IMainState {
@@ -6,6 +13,7 @@ export interface IMainState {
   isConnected: boolean;
   levelIsLoading: boolean;
   flags: FlagMap;
+  mapLoadingState: Boolean;
 }
 
 const initialState: IMainState = {
@@ -13,6 +21,7 @@ const initialState: IMainState = {
   levelIsLoading: false,
   map: [],
   flags: {},
+  mapLoadingState: false,
 };
 
 function rootReducer(state = initialState, action: any) {
@@ -42,6 +51,10 @@ function rootReducer(state = initialState, action: any) {
         },
       },
     };
+  }
+
+  if (action.type === MAP_LOADING_STATE) {
+    return { ...state, ...{ mapLoadingState: action.payload.state } };
   }
 
   if (action.type === CLEAR_PROGRESS) {
