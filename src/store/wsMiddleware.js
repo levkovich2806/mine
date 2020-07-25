@@ -43,7 +43,7 @@ export default (store) => (next) => action => {
             break;
           case GAME_OVER:
             dispatch(onSendMessage(getMapMessage()));
-            // Показать, что игра окончена, результат и т.п. (записать в localStorage)
+            alert("Игра окончена. Вы победили!");
             break;
           default:
             break;

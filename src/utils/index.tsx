@@ -1,5 +1,6 @@
 import { PointClick } from '../interfaces';
 import { BLOCK_OPEN, MAP_START, NEW_LEVEL } from '../constants';
+import { GAME_OVER } from '../actions';
 
 export const getNewLevelMessage = (level: number) => {
   return `new ${level}`;
@@ -19,6 +20,20 @@ export const getPointClickMessage = ({ x, y }: PointClick) => {
 
 export const parseWsMessage = (message: string) => {
   const [type, answer] = message.split(':');
+
+  console.log({
+    type,
+    answer,
+  });
+
+  if (answer && answer.trim().startsWith('You win')) {
+    return {
+      type: GAME_OVER,
+      payload: {
+        answer: answer,
+      },
+    };
+  }
 
   switch (type) {
     case MAP_START:
@@ -46,14 +61,7 @@ export const parseWsMessage = (message: string) => {
       break;
   }
 
-  // if (answer && answer.startsWith('You win')) {
-  //   return {
-  //     type: GAME_OVER,
-  //     payload: {
-  //       answer: answer,
-  //     },
-  //   };
-  // }
+
 
   // if (message.startsWith(MAP_START)) {
   //
