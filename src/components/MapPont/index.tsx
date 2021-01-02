@@ -71,7 +71,6 @@ const MapPoint: React.FunctionComponent<Props> = ({ x, y, onMapClick, onSetFlag,
     );
   }
 
-
   return (
     <div
       className={styles.point}
