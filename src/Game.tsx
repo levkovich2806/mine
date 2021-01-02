@@ -35,6 +35,7 @@ class Game extends Component<Props, {}> {
         {!isConnected ? (
           <div className={styles.start}>
             <button className={styles.startButton} onClick={this.handleStartGame}>Start</button>
+            Last update: {process.env.TIME}
           </div>
         ) : (
           <>
@@ -46,13 +47,6 @@ class Game extends Component<Props, {}> {
             </div>
           </>
         )}
-        {/*<button onClick={this.handleGetHelp}>Help</button>*/}
-        {/*<button onClick={() => this.handleNewLevel(1)}>New 1</button>*/}
-        {/*<button onClick={() => this.handleNewLevel(2)}>New 2</button>*/}
-        {/*<button onClick={() => this.handleNewLevel(3)}>New 3</button>*/}
-        {/*<button onClick={() => this.handleNewLevel(4)}>New 4</button>*/}
-        {/*<button onClick={this.handleGetMap}>Map</button>*/}
-        {/*<button onClick={() => this.handleClick({x: 2, y: 3})}>Click 2x3</button>*/}
       </>
     );
   }
