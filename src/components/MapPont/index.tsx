@@ -1,13 +1,14 @@
 import React, { memo, useCallback } from 'react';
+import classnames from 'classnames'
 import styles from './index.module.css';
-import { BOMB_BLOCK, COLORS, UNDEFINED_BLOCK } from '../../constants';
+import { BOMB_BLOCK, MOUSE_MIDDLE_BTN, UNDEFINED_BLOCK } from '../../constants';
 import { PointClick } from '../../interfaces';
 
-function test(prev: any, next: any) {
-  const { point } = prev;
-  const { point: nextPoint } = next;
+function isEqual(prev: any, next: any) {
+  const { point, isFlag } = prev;
+  const { point: nextPoint, isFlag: nextIsFlag } = next;
 
-  return point === nextPoint;
+  return point === nextPoint && isFlag === nextIsFlag;
 }
 
 interface Props {
@@ -20,16 +21,17 @@ interface Props {
 }
 
 const MapPoint: React.FunctionComponent<Props> = ({ x, y, onMapClick, onSetFlag, isFlag, point }) => {
-  const withColor = (point: string) => <span style={{ color: `${COLORS[Number(point)]}` }}>{point}</span>;
+
 
   const bombImage = <img src={'/bomb.png'} alt={'Bomb'}/>;
 
   const contextMenuHandler = (e: React.MouseEvent<HTMLSpanElement>) => {
     e.preventDefault();
+    e.stopPropagation();
     handleRightClick({ x, y });
   };
 
-  const handlePointClick = useCallback(() => {
+  const handlePointClick = useCallback((e: React.MouseEvent<HTMLSpanElement>) => {
     onMapClick({ x, y });
   }, []);
 
@@ -40,14 +42,32 @@ const MapPoint: React.FunctionComponent<Props> = ({ x, y, onMapClick, onSetFlag,
     });
   }, []);
 
+  const handleWheelClick = (e: React.MouseEvent<HTMLSpanElement>) => {
+    e.preventDefault();
+
+    //Mouse middle
+    if (e.button === MOUSE_MIDDLE_BTN) {
+      console.log('MIDDLE');
+    }
+  };
+
+  const withColor = (point: string) => (
+    <div
+      onMouseDown={handleWheelClick}
+      className={classnames(styles.point_resolve, styles[`point_resolve_${point}`])}
+    >
+      {parseInt(point) > 0 ? point : ''}
+    </div>
+  );
+
   if (isFlag) {
     return (
-      <span
+      <div
         className={styles.point}
         onContextMenu={contextMenuHandler}
       >
         <img src={'/flag.png'} alt={'Flag'}/>
-      </span>
+      </div>
     );
   }
 
@@ -58,7 +78,7 @@ const MapPoint: React.FunctionComponent<Props> = ({ x, y, onMapClick, onSetFlag,
     >
       {
         (point === UNDEFINED_BLOCK) ?
-          (<span
+          (<div
             className={styles.undefinedPoint}
             onClick={handlePointClick}
             onContextMenu={contextMenuHandler}
@@ -72,4 +92,4 @@ const MapPoint: React.FunctionComponent<Props> = ({ x, y, onMapClick, onSetFlag,
   );
 };
 
-export default memo(MapPoint, test);
+export default memo(MapPoint, isEqual);
