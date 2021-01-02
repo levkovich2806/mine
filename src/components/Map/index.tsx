@@ -4,6 +4,7 @@ import MapPoint from '../MapPont';
 import { onSetFlag, onMapClick } from '../../actions';
 import { onSendMessage } from '../../actions/websocket';
 import styles from './index.module.css';
+import { getPointRound } from '../../utils';
 
 interface Props {
   map: Array<any>,
@@ -17,6 +18,10 @@ const Map: React.FunctionComponent<Props> = ({ map, mapLoadingState, flags, onMa
   if (mapLoadingState) {
     return <div>Loading...</div>;
   }
+
+  const onQuickOpen = ({ x, y }: { x: number, y: number }) => {
+    getPointRound(map, x, y);
+  };
 
   return (
     <div>
@@ -36,6 +41,7 @@ const Map: React.FunctionComponent<Props> = ({ map, mapLoadingState, flags, onMa
                   y={y}
                   onMapClick={onMapClick}
                   onSetFlag={onSetFlag}
+                  onQuickOpen={onQuickOpen}
                 />
               );
             })}

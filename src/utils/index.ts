@@ -1,5 +1,5 @@
 import { PointClick } from '../interfaces';
-import { BLOCK_OPEN, MAP_START, NEW_LEVEL } from '../constants';
+import { BLOCK_OPEN, MAP_START, NEW_LEVEL, UNDEFINED_BLOCK } from '../constants';
 import { GAME_OVER } from '../actions';
 
 export const getNewLevelMessage = (level: number) => {
@@ -68,4 +68,30 @@ export const getMap = (data: string | undefined = '') => {
   });
 
   return result;
+};
+
+export const getPointRound = (map: string[], x: number, y: number) => {
+  const params = [
+    [-1, -1], [-1, 0], [-1, 1],
+    [0, -1], [0, 1],
+    [1, -1], [1, 0], [1, 1],
+  ];
+
+  const undefinedBlocks = [];
+
+  for (let i = 0; i < params.length; i++) {
+    const param0 = y + params[i][0];
+    const param1 = x + params[i][1];
+
+    if (param0 > map.length || param0 < 0 || param1 > map.length || param1 < 0) {
+      continue;
+    }
+
+    const block = map[param0][param1];
+    if (block === UNDEFINED_BLOCK) {
+      undefinedBlocks.push([param0, param1]);
+    }
+  }
+
+  return undefinedBlocks;
 };

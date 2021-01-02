@@ -1,5 +1,5 @@
 import React, { memo, useCallback } from 'react';
-import classnames from 'classnames'
+import classnames from 'classnames';
 import styles from './index.module.css';
 import { BOMB_BLOCK, MOUSE_MIDDLE_BTN, UNDEFINED_BLOCK } from '../../constants';
 import { PointClick } from '../../interfaces';
@@ -16,11 +16,12 @@ interface Props {
   y: number,
   onMapClick: Function,
   onSetFlag: Function,
+  onQuickOpen: Function,
   isFlag: boolean
   point: string
 }
 
-const MapPoint: React.FunctionComponent<Props> = ({ x, y, onMapClick, onSetFlag, isFlag, point }) => {
+const MapPoint: React.FunctionComponent<Props> = ({ x, y, onMapClick, onSetFlag, onQuickOpen, isFlag, point }) => {
 
 
   const bombImage = <img src={'/bomb.png'} alt={'Bomb'}/>;
@@ -47,7 +48,7 @@ const MapPoint: React.FunctionComponent<Props> = ({ x, y, onMapClick, onSetFlag,
 
     //Mouse middle
     if (e.button === MOUSE_MIDDLE_BTN) {
-      console.log('MIDDLE');
+      onQuickOpen({ x, y });
     }
   };
 
