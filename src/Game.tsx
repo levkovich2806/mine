@@ -34,7 +34,7 @@ class Game extends Component<Props, {}> {
 
         {!isConnected ? (
           <div className={styles.start}>
-            <button className={styles.startButton} onClick={this.handleStartGame}>Start</button>s
+            <button className={styles.startButton} onClick={this.handleStartGame}>Start</button>
           </div>
         ) : (
           <>
