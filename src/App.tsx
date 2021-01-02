@@ -31,7 +31,6 @@ class App extends React.Component {
 
     this.socket.onmessage = function (event: MessageEvent) {
       // const data: any = JSON.parse(event.data);
-      // console.log({data});
       console.log("Получены данные " + event.data);
     };
 

@@ -18,7 +18,7 @@ class Game extends Component<Props, {}> {
 
   handleStartGame = () => {
     const { wsConnect } = this.props;
-    // console.log('handleStartGame');
+
     wsConnect();
     // wsConnect();
   };

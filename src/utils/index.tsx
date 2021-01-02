@@ -21,11 +21,6 @@ export const getPointClickMessage = ({ x, y }: PointClick) => {
 export const parseWsMessage = (message: string) => {
   const [type, answer] = message.split(':');
 
-  console.log({
-    type,
-    answer,
-  });
-
   if (answer && answer.trim().startsWith('You win')) {
     return {
       type: GAME_OVER,
@@ -60,36 +55,6 @@ export const parseWsMessage = (message: string) => {
     default:
       break;
   }
-
-
-
-  // if (message.startsWith(MAP_START)) {
-  //
-  //
-  //   if (params[1]) {
-  //     const map = getMap(params[1]);
-  //     // store.dispatch(updateMap(map));
-  //     return {
-  //       type: MAP_START,
-  //       payload: {
-  //         map,
-  //       },
-  //     };
-  //   }
-  // } else if (message.startsWith(NEW_LEVEL)) {
-  //   console.log('new level answer', message);
-  //   return {
-  //     type: NEW_LEVEL,
-  //   };
-  //   // store.dispatch(onLevelIsLoading());
-  // } else if (message.startsWith(BLOCK_OPEN)) {
-  //   console.log('block open answer', message);
-  //   return {
-  //     type: BLOCK_OPEN,
-  //   };
-  // }
-
-  // return null;
 };
 
 export const getMap = (data: string | undefined = '') => {

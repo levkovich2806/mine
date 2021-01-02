@@ -1,45 +1,46 @@
-import React, { memo } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-
-import classNames from 'classnames';
+import React, { memo, useCallback } from 'react';
 import styles from './index.module.css';
 import { BOMB_BLOCK, COLORS, UNDEFINED_BLOCK } from '../../constants';
-import { IAppState } from '../../reducers';
 import { PointClick } from '../../interfaces';
 
+function test(prev: any, next: any) {
+  const { point } = prev;
+  const { point: nextPoint } = next;
 
-interface Props {
-  pointData: PointClick,
-  handleClick: Function,
-  handleRightClick: Function,
+  return point === nextPoint;
 }
 
-const MapPoint: React.FunctionComponent<Props> = ({ pointData, handleClick, handleRightClick }) => {
+interface Props {
+  x: number,
+  y: number,
+  onMapClick: Function,
+  onSetFlag: Function,
+  isFlag: boolean
+  point: string
+}
+
+const MapPoint: React.FunctionComponent<Props> = ({ x, y, onMapClick, onSetFlag, isFlag, point }) => {
   const withColor = (point: string) => <span style={{ color: `${COLORS[Number(point)]}` }}>{point}</span>;
 
   const bombImage = <img src={'/bomb.png'} alt={'Bomb'}/>;
 
   const contextMenuHandler = (e: React.MouseEvent<HTMLSpanElement>) => {
     e.preventDefault();
-    handleRightClick(pointData);
+    handleRightClick({ x, y });
   };
 
-  const undefinedBlock = (pointData: PointClick) => {
-    return (
-      <span
-        className={styles.undefinedPoint}
-        onClick={() => handleClick(pointData)}
-        onContextMenu={contextMenuHandler}
-      />
-    );
-  };
+  const handlePointClick = useCallback(() => {
+    onMapClick({ x, y });
+  }, []);
 
-  const flags = useSelector((state: IAppState) => state.main.flags);
-  const map = useSelector((state: IAppState) => state.main.map);
+  const handleRightClick = useCallback(({ x, y }: PointClick) => {
+    onSetFlag({
+      x,
+      y,
+    });
+  }, []);
 
-  const { x, y } = pointData || {};
-
-  if (flags[`${x}.${y}`]) {
+  if (isFlag) {
     return (
       <span
         className={styles.point}
@@ -50,7 +51,6 @@ const MapPoint: React.FunctionComponent<Props> = ({ pointData, handleClick, hand
     );
   }
 
-  const point = map[y][x];
 
   return (
     <div
@@ -58,7 +58,11 @@ const MapPoint: React.FunctionComponent<Props> = ({ pointData, handleClick, hand
     >
       {
         (point === UNDEFINED_BLOCK) ?
-          undefinedBlock(pointData) :
+          (<span
+            className={styles.undefinedPoint}
+            onClick={handlePointClick}
+            onContextMenu={contextMenuHandler}
+          />) :
           (point === BOMB_BLOCK ?
               bombImage :
               withColor(point)
@@ -68,4 +72,4 @@ const MapPoint: React.FunctionComponent<Props> = ({ pointData, handleClick, hand
   );
 };
 
-export default memo(MapPoint);
+export default memo(MapPoint, test);

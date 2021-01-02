@@ -24,8 +24,6 @@ export default (store) => (next) => action => {
       websocket.onmessage = (event) => {
         const { type, payload = {} } = parseWsMessage(event.data) || {};
 
-        // console.log({ type, payload });
-
         switch (type) {
           case MAP_START:
             const { map } = payload;
@@ -43,7 +41,7 @@ export default (store) => (next) => action => {
             break;
           case GAME_OVER:
             dispatch(onSendMessage(getMapMessage()));
-            alert("Игра окончена. Вы победили!");
+            alert('Игра окончена. Вы победили!');
             break;
           default:
             break;
