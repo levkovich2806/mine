@@ -33,7 +33,7 @@
 }
 
 .point_resolve {
-
+  cursor: default;
 }
 
 .point_resolve_0 {
@@ -64,10 +64,14 @@
   color: var(--mine-8)
 }
 
-.point div {
+.point span {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-content: center;
+  text-align: center;
+  width: 100%;
+  height: 100%;
 }
 
 .undefinedPoint {

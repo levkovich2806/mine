@@ -52,12 +52,12 @@ const MapPoint: React.FunctionComponent<Props> = ({ x, y, onMapClick, onSetFlag,
   };
 
   const withColor = (point: string) => (
-    <div
+    <span
       onMouseDown={handleWheelClick}
       className={classnames(styles.point_resolve, styles[`point_resolve_${point}`])}
     >
       {parseInt(point) > 0 ? point : ''}
-    </div>
+    </span>
   );
 
   if (isFlag) {
