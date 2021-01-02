@@ -34,9 +34,7 @@ class Game extends Component<Props, {}> {
 
         {!isConnected ? (
           <div className={styles.start}>
-            <button className={styles.startButton} onClick={this.handleStartGame}>Start</button>
-            Last update: {process.env.TIME}
-            {JSON.stringify(process.env)}
+            <button className={styles.startButton} onClick={this.handleStartGame}>Start</button>s
           </div>
         ) : (
           <>
