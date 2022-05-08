@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { getNewLevelMessage, getMapMessage } from '../../utils';
 import { onSendMessage } from '../../actions/websocket';
 import { onGetNewLevel } from '../../actions';
 import { connect } from 'react-redux';

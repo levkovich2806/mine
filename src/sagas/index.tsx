@@ -1,4 +1,4 @@
-import { takeLatest, call, put } from '@redux-saga/core/effects';
+import { takeLatest, put } from '@redux-saga/core/effects';
 import {
   ON_GET_MAP_SUCCESS,
   ON_GET_NEW_LEVEL,
